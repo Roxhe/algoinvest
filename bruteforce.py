@@ -27,7 +27,6 @@ for action in actions_list:
     profit = action['profits']
     value = int(action['price'])
     if profit < 10:
-
         price_prediction = value * (profit/100+1)
     else:
         price_prediction = value * (profit/100+1)
@@ -37,4 +36,26 @@ for action in actions_list:
                          'price_prediction': round(price_prediction, 2)}
     list_actions_prediction.append(action_prediction)
 
-print(list_actions_prediction)
+
+def combinaisons_maker(actions, enveloppe):
+    from itertools import combinations
+    nb_actions = len(actions)
+    all_combinaisons = []
+
+    for i in range(1, nb_actions + 1):
+        for combination in combinations(actions, i):
+            total_buy_price = sum([a['initial_price'] for a in combination])
+            total_price_prediction = sum([a['price_prediction'] for a in combination])
+            if total_buy_price <= enveloppe:
+                enveloppe_actions = {'combinaison': combination,
+                                     'total_buy_price': total_buy_price,
+                                     'total_price_prediction': int(total_price_prediction)}
+                all_combinaisons.append(enveloppe_actions)
+                #print(enveloppe_actions)
+
+        best_combinaison = max(all_combinaisons, key=lambda x: x['total_price_prediction'])
+
+    print(f'Voici la meilleure combinaison :{best_combinaison}')
+
+
+combinaisons_maker(list_actions_prediction, 500)
