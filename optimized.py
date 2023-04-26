@@ -1,7 +1,7 @@
 import csv
 
 
-with open('dataset1_Python+P7.csv', 'r') as csvfile:
+with open('dataset2_Python+P7.csv', 'r') as csvfile:
     reader = csv.DictReader(csvfile)
     actions_list = []
     for row in reader:
@@ -28,13 +28,14 @@ def combinaison_knapsack(actions, enveloppe):
                              'price_prediction': round(price_prediction, 2)}
         list_actions_prediction.append(action_prediction)
 
+    print(list_actions_prediction)
     list_actions_prediction = sorted(list_actions_prediction,
         key=lambda x: x['price_prediction'] / x['initial_price'] if x['initial_price'] != 0 else 0, reverse=True)
     total_value = 0
     total_weight = 0
     selected_actions = []
     for action in list_actions_prediction:
-        if total_weight + action['initial_price'] <= enveloppe:
+        if action['price_prediction'] >= 0 and total_weight + action['initial_price'] <= enveloppe:
             selected_actions.append(action['name'])
             total_value += action['price_prediction']
             total_weight += action['initial_price']
@@ -46,5 +47,5 @@ def combinaison_knapsack(actions, enveloppe):
     return selected_actions
 
 
-combinaison_knapsack(actions_list, 1000)
+combinaison_knapsack(actions_list, 500)
 
