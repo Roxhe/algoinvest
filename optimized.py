@@ -32,18 +32,18 @@ def combinaison_knapsack(actions, enveloppe):
         key=lambda x: x['price_prediction'] / x['initial_price'] if x['initial_price'] != 0 else 0, reverse=True)
     total_value = 0
     total_weight = 0
-    selected_items = []
+    selected_actions = []
     for action in list_actions_prediction:
         if total_weight + action['initial_price'] <= enveloppe:
-            selected_items.append(action['name'])
+            selected_actions.append(action['name'])
             total_value += action['price_prediction']
             total_weight += action['initial_price']
 
-    print(f"La combinaison d'actions dans la limite d'un budget de {enveloppe} est : {selected_items}.\n"
+    print(f"La combinaison d'actions dans la limite d'un budget de {enveloppe} est : {selected_actions}.\n"
           f"Valeur initiale totale : {total_weight}\n"
           f"Valeur estimée dans 2 ans : {total_value}")
 
-    return selected_items
+    return selected_actions
 
 
 combinaison_knapsack(actions_list, 1000)
