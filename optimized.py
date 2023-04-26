@@ -1,4 +1,5 @@
 import csv
+import time
 
 
 with open('dataset2_Python+P7.csv', 'r') as csvfile:
@@ -12,6 +13,7 @@ with open('dataset2_Python+P7.csv', 'r') as csvfile:
         }
         actions_list.append(action)
 
+start_time = time.time()
 
 def combinaison_knapsack(actions, enveloppe):
     list_actions_prediction = []
@@ -28,7 +30,6 @@ def combinaison_knapsack(actions, enveloppe):
                              'price_prediction': round(price_prediction, 2)}
         list_actions_prediction.append(action_prediction)
 
-    print(list_actions_prediction)
     list_actions_prediction = sorted(list_actions_prediction,
         key=lambda x: x['price_prediction'] / x['initial_price'] if x['initial_price'] != 0 else 0, reverse=True)
     total_value = 0
@@ -47,5 +48,8 @@ def combinaison_knapsack(actions, enveloppe):
     return selected_actions
 
 
-combinaison_knapsack(actions_list, 500)
+combinaison_knapsack(actions_list, 1000)
 
+end_time = time.time()
+duration_time = end_time - start_time
+print("Durée d'exécution : {:.2} secondes".format(duration_time))
