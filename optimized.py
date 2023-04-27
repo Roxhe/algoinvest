@@ -2,7 +2,7 @@ import csv
 import time
 
 
-with open('dataset2_Python+P7.csv', 'r') as csvfile:
+with open('dataset1_Python+P7.csv', 'r') as csvfile:
     reader = csv.DictReader(csvfile)
     actions_list = []
     for row in reader:
@@ -15,15 +15,14 @@ with open('dataset2_Python+P7.csv', 'r') as csvfile:
 
 start_time = time.time()
 
+
 def combinaison_knapsack(actions, enveloppe):
     list_actions_prediction = []
     for action in actions:
         profit = action['profit']
-        value = int(action['price'])
-        if profit < 10:
-            price_prediction = value * (profit / 100 + 1)
-        else:
-            price_prediction = value * (profit / 100 + 1)
+        value = action['price']
+
+        price_prediction = value * (profit / 100 + 1)
 
         action_prediction = {'name': action['name'],
                              'initial_price': action['price'],
@@ -35,20 +34,25 @@ def combinaison_knapsack(actions, enveloppe):
     total_value = 0
     total_weight = 0
     selected_actions = []
+    print(list_actions_prediction)
     for action in list_actions_prediction:
-        if action['price_prediction'] >= 0 and total_weight + action['initial_price'] <= enveloppe:
+        if action['price_prediction'] > 0 and total_weight + action['initial_price'] <= enveloppe:
             selected_actions.append(action['name'])
             total_value += action['price_prediction']
             total_weight += action['initial_price']
+            profit = total_value - total_weight
+            print(profit)
 
     print(f"La combinaison d'actions dans la limite d'un budget de {enveloppe} est : {selected_actions}.\n"
           f"Valeur initiale totale : {total_weight}\n"
-          f"Valeur estimée dans 2 ans : {total_value}")
+          f"Valeur estimée dans 2 ans : {total_value}\n"
+          f"Profit total : {profit}"
+          )
 
     return selected_actions
 
 
-combinaison_knapsack(actions_list, 1000)
+combinaison_knapsack(actions_list, 500)
 
 end_time = time.time()
 duration_time = end_time - start_time
