@@ -2,7 +2,7 @@ import csv
 import time
 
 
-with open('dataset1_Python+P7.csv', 'r') as csvfile:
+with open('dataset2_Python+P7.csv', 'r') as csvfile:
     reader = csv.DictReader(csvfile)
     actions_list = []
     for row in reader:
@@ -34,14 +34,12 @@ def combinaison_knapsack(actions, enveloppe):
     total_value = 0
     total_weight = 0
     selected_actions = []
-    print(list_actions_prediction)
     for action in list_actions_prediction:
         if action['price_prediction'] > 0 and total_weight + action['initial_price'] <= enveloppe:
             selected_actions.append(action['name'])
             total_value += action['price_prediction']
             total_weight += action['initial_price']
             profit = total_value - total_weight
-            print(profit)
 
     print(f"La combinaison d'actions dans la limite d'un budget de {enveloppe} est : {selected_actions}.\n"
           f"Valeur initiale totale : {total_weight}\n"
